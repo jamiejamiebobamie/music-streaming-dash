@@ -1,23 +1,39 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { Navbar } from './Components/Navbar/Navbar';
+import {
+  generateUser,
+  generateSong,
+  generateRevenue
+} from './utils/MockData';
+import { getRandomIndex } from './utils/utils';
+
 import './App.css';
 
 function App() {
+  useEffect(() => {
+    const numUsers = 10000;
+    const numSongs = 100000;
+
+    const revenue = [];
+    const users = Array(numUsers).fill(0).map(() => {
+      const user = generateUser(.7);
+      revenue.push(generateRevenue(user));
+      return user;
+    });
+
+    const songs = Array(numSongs).fill(0).map(() => {
+      const userIndex = getRandomIndex(numUsers - 1);
+      const { _uuid, joinDate } = users[userIndex];
+      return generateSong(_uuid, joinDate);
+    });
+
+    console.log({ users, songs, revenue })
+  }, []);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
     </div>
   );
 }

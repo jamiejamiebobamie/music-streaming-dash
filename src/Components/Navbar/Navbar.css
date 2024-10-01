@@ -1,0 +1,6 @@
+.myClass{
+    background-color: red !important;
+    position: fixed;
+    top: 0px;
+    width: 100vw;
+}
